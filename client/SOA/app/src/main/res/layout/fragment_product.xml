@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="ProductFragmentBinding">
+
+        <variable
+            name="viewModel"
+            type="com.example.soa.ui.model.IProgramViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/items"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:items="@{viewModel.items}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/product_item" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visible="@{viewModel.progress}"
+            app:layout_constraintBottom_toBottomOf="@id/items"
+            app:layout_constraintEnd_toEndOf="@id/items"
+            app:layout_constraintStart_toStartOf="@id/items"
+            app:layout_constraintTop_toTopOf="@id/items" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

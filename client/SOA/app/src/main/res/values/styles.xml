@@ -1,0 +1,45 @@
+<resources>
+
+    <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/purple</item>
+        <item name="colorControlNormal">@color/primary_text</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_inverse_text</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_inverse_text</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryVariant">@color/purple_variant</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white_variant</item>
+        <item name="colorAccent">@color/purple</item>
+        <item name="colorControlNormal">@color/primary_inverse_text</item>
+        <item name="android:textColorPrimary">@color/primary_inverse_text</item>
+        <item name="android:textColorSecondary">@color/secondary_inverse_text</item>
+        <item name="android:textColorPrimaryInverse">@color/primary_text</item>
+        <item name="android:textColorSecondaryInverse">@color/secondary_text</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme" parent="Base.AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Base.AppTheme.Dark">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Splash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+</resources>

@@ -1,0 +1,34 @@
+version: "3"
+services:
+#  order:
+#    build: ./order-microservice
+#    ports:
+#      - 8877:8877
+#    environment:
+#      DB_HOST: mongo
+#      PAYMENT_HOST: payment
+#      ORDER_HOST: order
+#    links:
+#      - mongo
+#  payment:
+#    build: ./payment-microservice
+#    # ports:
+#    #   - 8875:8875
+#    environment:
+#      PAYMENT_HOST: payment
+#      ORDER_HOST: order
+  user:
+    build: ./user-microservice
+    ports:
+      - 8879:8879
+    environment:
+      DB_HOST: mongo
+      PAYMENT_HOST: payment
+      ORDER_HOST: order
+    links:
+      - mongo
+  mongo:
+    image: mongo
+    restart: always
+    # ports:
+    #   - 27017:27017
