@@ -8,5 +8,7 @@ object Constants {
 
     const val KEY_USER = "user"
     const val KEY_ACCESS_TOKEN = "access_token"
-    const val KEY_PROGRAM = "program"
+
+    const val FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"
+
 }

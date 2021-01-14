@@ -15,7 +15,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Base.AppTheme.Dark" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryVariant">@color/purple_variant</item>
         <item name="colorOnPrimary">@color/white</item>

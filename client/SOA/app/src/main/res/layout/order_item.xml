@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.soa.ui.model.IProgramItemViewModel" />
+            type="com.example.soa.ui.model.IOrderItemViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,39 +27,13 @@
             app:layout_constraintEnd_toStartOf="@id/price"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Laptop" />
-
-        <TextView
-            android:id="@+id/brand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingTop="@dimen/small_margin"
-            android:text="@{viewModel.brand}"
-            android:textColor="@color/purple"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="Lenovo" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/default_margin"
-            android:paddingTop="@dimen/default_margin"
-            android:paddingBottom="@dimen/medium_margin"
-            android:text="@{viewModel.description}"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/brand"
-            tools:text="Long description about the product with no more than 100 characters" />
+            tools:text="Laptop Lenovo" />
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/medium_margin"
             android:text="@{viewModel.price}"
             android:textColor="@color/purple"
             android:textSize="18sp"
@@ -69,20 +43,54 @@
             app:layout_constraintTop_toTopOf="@id/title"
             tools:text="5000 RON" />
 
-        <Button
-            android:id="@+id/signin"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_side_margin"
+            android:text="@{viewModel.created}"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Created at: 2020-10-20" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/side_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:background="@{viewModel.color}"
+            android:paddingStart="@dimen/large_side_margin"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingEnd="@dimen/large_side_margin"
+            android:paddingBottom="@dimen/medium_margin"
+            android:text="@{viewModel.status"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/date"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            tools:background="@color/gray"
+            tools:text="CREATED" />
+
+        <Button
+            android:id="@+id/pay"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginBottom="@dimen/medium_margin"
             android:backgroundTint="@color/purple"
             android:onClick="@{()->viewModel.onClick()}"
             android:padding="@dimen/medium_margin"
-            android:text="@string/buy"
+            android:text="@string/pay"
             android:textAllCaps="false"
             android:textSize="17sp"
+            android:visible="@{viewModel.visible}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

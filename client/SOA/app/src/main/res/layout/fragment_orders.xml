@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="ProductFragmentBinding">
+    <data class="OrderFragmentBinding">
 
         <variable
             name="viewModel"
-            type="com.example.soa.ui.model.IProductsViewModel" />
+            type="com.example.soa.ui.model.IOrdersViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,55 +22,35 @@
             android:minHeight="?actionBarSize"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/black"
+                android:layout_marginStart="@dimen/small_margin"
+                android:onClick="@{()->viewModel.onBack()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/small_side_margin"
+                android:layout_marginStart="@dimen/medium_margin"
                 android:gravity="center_vertical"
                 android:padding="@dimen/medium_margin"
-                android:text="@string/products"
+                android:text="@string/orders"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/cart"
-                app:layout_constraintEnd_toStartOf="@id/cart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/cart" />
-
-            <ImageView
-                android:id="@+id/cart"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/side_margin"
-                android:adjustViewBounds="true"
-                android:onClick="@{()->viewModel.onOrders()}"
-                android:src="@drawable/ic_shopping_cart"
-                android:visible="@{!viewModel.progress}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/black" />
-
-            <TextView
-                android:id="@+id/number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_circle"
-                android:gravity="center"
-                android:minWidth="24dp"
-                android:onClick="@{()->viewModel.onOrders()}"
-                android:text="@{viewModel.size}"
-                android:textColor="@color/red"
-                android:textSize="18sp"
-                android:translationX="8dp"
-                android:visible="@{!viewModel.progress}"
-                app:layout_constraintBottom_toTopOf="@id/cart"
-                app:layout_constraintEnd_toEndOf="@id/cart"
-                app:layout_constraintTop_toTopOf="@id/cart"
-                tools:text="4" />
-
+                app:layout_constraintStart_toEndOf="@id/back"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items"
@@ -83,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header"
-            tools:listitem="@layout/product_item" />
+            tools:listitem="@layout/order_item" />
 
         <ProgressBar
             android:layout_width="wrap_content"

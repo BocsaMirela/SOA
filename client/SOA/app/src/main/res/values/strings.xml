@@ -9,4 +9,7 @@
     <string name="unable_to_login">Unable to login</string>
     <string name="wrong_email_or_password">Wrong email or password</string>
     <string name="buy">Buy</string>
+    <string name="products">Products</string>
+    <string name="orders">Orders</string>
+    <string name="pay">Pay</string>
 </resources>

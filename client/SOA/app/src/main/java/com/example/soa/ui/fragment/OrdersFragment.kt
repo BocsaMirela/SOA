@@ -1,7 +1,6 @@
 package com.example.soa.ui.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,26 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.soa.R
 import com.example.soa.SoaApplication
-import com.example.soa.databinding.ProductFragmentBinding
+import com.example.soa.databinding.OrderFragmentBinding
 import com.example.soa.repository.IDataRepository
 import com.example.soa.ui.adapter.ProductAdapter
 import com.example.soa.ui.fragment.base.BaseFragment
-import com.example.soa.ui.model.IProductsViewModel
-import com.example.soa.ui.model.ProductsViewModel
-import com.example.soa.ui.model.ProductsViewModelFactory
-import com.example.soa.ui.screen.LoginScreen
-import com.example.soa.ui.screen.OrdersScreen
+import com.example.soa.ui.model.IOrdersViewModel
+import com.example.soa.ui.model.OrdersViewModel
+import com.example.soa.ui.model.OrdersViewModelFactory
 import javax.inject.Inject
 
 
-class ProductsFragment : BaseFragment() {
+class OrdersFragment : BaseFragment() {
 
     @Inject
     internal lateinit var repository: IDataRepository
 
-    private val viewModel: IProductsViewModel by lazy {
-        val factory = ProductsViewModelFactory(repository, preference)
-        ViewModelProvider(this, factory).get(ProductsViewModel::class.java)
+    private val viewModel: IOrdersViewModel by lazy {
+        val factory = OrdersViewModelFactory(repository, preference)
+        ViewModelProvider(this, factory).get(OrdersViewModel::class.java)
     }
 
     override fun onAttach(context: Context) {
@@ -47,9 +44,9 @@ class ProductsFragment : BaseFragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<ProductFragmentBinding>(
+        val binding = DataBindingUtil.inflate<OrderFragmentBinding>(
                 inflater,
-                R.layout.fragment_product,
+                R.layout.fragment_orders,
                 container,
                 false
         )
@@ -68,12 +65,11 @@ class ProductsFragment : BaseFragment() {
 
         viewModel.update.observe(viewLifecycleOwner, Observer {
             when (it) {
-                ProductsViewModel.Action.ORDERS -> {
-                    startActivity(Intent(activity, OrdersScreen::class.java))
+                null -> {
+                    requireActivity().finish()
                 }
                 else -> {
-                    startActivity(Intent(activity, LoginScreen::class.java))
-                    requireActivity().finish()
+//                    startActivity(Intent(activity, ClassScreen::class.java).putExtra(KEY_PROGRAM, it))
                 }
             }
         })
