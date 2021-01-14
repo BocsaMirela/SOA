@@ -20,7 +20,7 @@ export class AuthController {
         console.log('user ' + req.user)
         return {
             id: req.user._id,
-            username: req.user.username
+            userId: req.user.username
         };
     }
 }

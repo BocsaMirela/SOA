@@ -5,4 +5,6 @@ export class CreateOrderDto {
     amount: number;
     @ApiModelProperty()
     userId: string;
+    @ApiModelProperty()
+    productId: string;
 }
