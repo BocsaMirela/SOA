@@ -11,4 +11,6 @@ object Constants {
 
     const val FORMAT = "yyyy-MM-dd'T'hh:mm:ss.SSS'Z'"
 
+    const val SHORT_FORMAT = "yyyy-MM-dd hh:mm"
+
 }

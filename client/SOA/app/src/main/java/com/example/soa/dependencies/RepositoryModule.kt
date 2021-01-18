@@ -2,6 +2,7 @@ package com.example.soa.dependencies
 
 import android.content.Context
 import com.example.soa.network.client.DataClient
+import com.example.soa.network.client.OrdersClient
 import com.example.soa.repository.DataRepository
 import com.example.soa.repository.IDataRepository
 import com.example.soa.repository.IPreference
@@ -15,8 +16,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    internal fun provideDataRepository(dataClient: DataClient): IDataRepository {
-        return DataRepository(dataClient)
+    internal fun provideDataRepository(dataClient: DataClient, ordersClient: OrdersClient): IDataRepository {
+        return DataRepository(dataClient, ordersClient)
     }
 
     @Provides

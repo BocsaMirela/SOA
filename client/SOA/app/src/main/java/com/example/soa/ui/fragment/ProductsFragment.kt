@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.soa.R
 import com.example.soa.SoaApplication
 import com.example.soa.databinding.ProductFragmentBinding
+import com.example.soa.network.client.DataClient
 import com.example.soa.repository.IDataRepository
 import com.example.soa.ui.adapter.ProductAdapter
 import com.example.soa.ui.fragment.base.BaseFragment
@@ -27,6 +28,9 @@ import javax.inject.Inject
 
 
 class ProductsFragment : BaseFragment() {
+
+    @Inject
+    internal lateinit var client: DataClient
 
     @Inject
     internal lateinit var repository: IDataRepository

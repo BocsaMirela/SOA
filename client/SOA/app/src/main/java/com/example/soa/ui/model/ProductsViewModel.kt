@@ -20,7 +20,7 @@ import io.reactivex.rxkotlin.subscribeBy
 
 interface IProductsViewModel : INetworkViewModel<ProductsViewModel.Action> {
     val items: LiveData<List<IProgramItemViewModel>>
-    val size: LiveData<Int>
+    val size: LiveData<String>
     fun onOrders()
     fun onLogOut()
 }
@@ -32,7 +32,7 @@ class ProductsViewModel(
 
     override val items: MutableLiveData<List<IProgramItemViewModel>> by lazy { MutableLiveData<List<IProgramItemViewModel>>() }
 
-    override val size: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
+    override val size: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
     override val update: SingleLiveEvent<Action> by lazy { SingleLiveEvent<Action>() }
 
@@ -46,7 +46,7 @@ class ProductsViewModel(
         progress.postValue(true)
         repository.createOrder(product, user).subscribeBy(onComplete = {
             progress.postValue(false)
-            size.postValue((size.value ?: ZERO).inc())
+            size.postValue((size.value?.toInt() ?: ZERO).inc().toString())
         }, onError = {
             progress.postValue(false)
             error.postValue(it.toRetrofitException())
@@ -57,9 +57,9 @@ class ProductsViewModel(
         progress.postValue(true)
 
         repository.getOrders().subscribeBy(onSuccess = {
-            size.postValue(it.size)
+            size.postValue(it.size.toString())
         }, onError = {
-            size.postValue(ZERO)
+            size.postValue(ZERO.toString())
         })
 
         repository.getProducts().subscribeBy(onSuccess = {
@@ -72,18 +72,18 @@ class ProductsViewModel(
     }
 
     override fun onOrders() {
-        update.postValue(null)
+        update.postValue(Action.ORDERS)
     }
 
     override fun onLogOut() {
-        update.postValue(Action.ORDERS)
+        update.postValue(null)
     }
 
     companion object {
         private const val ZERO = 0
     }
 
-    enum class Action{
+    enum class Action {
         ORDERS
     }
 }

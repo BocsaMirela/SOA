@@ -15,6 +15,7 @@ import com.example.soa.R
 import com.example.soa.SoaApplication
 import com.example.soa.databinding.OrderFragmentBinding
 import com.example.soa.repository.IDataRepository
+import com.example.soa.ui.adapter.OrderAdapter
 import com.example.soa.ui.adapter.ProductAdapter
 import com.example.soa.ui.fragment.base.BaseFragment
 import com.example.soa.ui.model.IOrdersViewModel
@@ -54,7 +55,7 @@ class OrdersFragment : BaseFragment() {
         binding.viewModel = viewModel
         binding.items.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.items.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        binding.items.adapter = ProductAdapter(requireContext())
+        binding.items.adapter = OrderAdapter(requireContext())
         binding.executePendingBindings()
 
         return binding.root

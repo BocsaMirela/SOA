@@ -2,6 +2,7 @@ package com.example.soa.dependencies
 
 import android.content.Context
 import com.example.soa.ui.fragment.LoginFragment
+import com.example.soa.ui.fragment.OrdersFragment
 import com.example.soa.ui.fragment.ProductsFragment
 import com.example.soa.ui.fragment.base.BaseFragment
 import com.example.soa.ui.screen.SplashScreen
@@ -16,4 +17,5 @@ interface ApplicationComponent {
     fun inject(splashScreen: SplashScreen)
     fun inject(loginFragment: LoginFragment)
     fun inject(productsFragment: ProductsFragment)
+    fun inject(ordersFragment: OrdersFragment)
 }

@@ -7,6 +7,7 @@ import com.example.soa.network.HttpAuthInterceptor
 import com.example.soa.network.adapter.RetrofitCallAdapterFactory
 import com.example.soa.network.client.AuthClient
 import com.example.soa.network.client.DataClient
+import com.example.soa.network.client.OrdersClient
 import com.example.soa.network.client.SessionClient
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.readystatesoftware.chuck.ChuckInterceptor
@@ -103,8 +104,24 @@ class NetworkModule {
             .build().create(DataClient::class.java)
     }
 
+    @Provides
+    @Singleton
+    internal fun provideOrdersClient(
+        okHttpClient: OkHttpClient,
+        adapter: CallAdapter.Factory,
+        gsonConverterFactory: GsonConverterFactory
+    ): OrdersClient {
+        return Retrofit.Builder()
+            .baseUrl(ORDERS_ENDPOINT)
+            .client(okHttpClient)
+            .addCallAdapterFactory(adapter)
+            .addConverterFactory(gsonConverterFactory)
+            .build().create(OrdersClient::class.java)
+    }
+
     companion object {
         private const val AUTH_ENDPOINT = "http://192.168.42.50:8879/"
         private const val CORE_ENDPOINT = "http://192.168.42.50:8879/"
+        private const val ORDERS_ENDPOINT = "http://192.168.42.50:8877/"
     }
 }

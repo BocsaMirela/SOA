@@ -59,6 +59,8 @@ class OrdersViewModel(
             progress.postValue(false)
             error.postValue(it.toRetrofitException())
         })
+
+        val i =0
     }
 
     override fun onBack() {
