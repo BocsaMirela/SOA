@@ -13,7 +13,7 @@ async function bootstrap() {
 
     app.enableCors();
     app.useWebSocketAdapter(new WsAdapter(app));
-    await app.listen(8879);
+    await app.listen(8874);
 }
 
 bootstrap();
