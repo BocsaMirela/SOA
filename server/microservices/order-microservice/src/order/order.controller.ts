@@ -13,7 +13,6 @@ import {JwtAuthGuard} from '../auth/jwt-auth.guard';
 
 @Controller('orders')
 @ApiUseTags('orders')
-@UseGuards(JwtAuthGuard)
 export class OrderController {
     private readonly logger = new Logger('OrderController');
 
@@ -24,13 +23,15 @@ export class OrderController {
     }
 
     @Get()
+    @UseGuards(JwtAuthGuard)
     index(): Observable<IOrder[]> {
         return from(this.service.findAll());
     }
 
     @Post()
+    @UseGuards(JwtAuthGuard)
     async create(@Res() res: Response, @Body() createOrderDto: CreateOrderDto) {
-        if (!createOrderDto || !createOrderDto.amount || createOrderDto.amount <= 0 || !createOrderDto.userId || !createOrderDto.productId)
+        if (!createOrderDto || !createOrderDto.amount || createOrderDto.amount <= 0 || !createOrderDto.userId || !createOrderDto.product)
             return res.status(HttpStatus.BAD_REQUEST).send();
 
         try {
@@ -45,6 +46,7 @@ export class OrderController {
     }
 
     @Post(':id/buy')
+    @UseGuards(JwtAuthGuard)
     @ApiImplicitParam({
         name: 'id',
         required: true,
@@ -59,7 +61,9 @@ export class OrderController {
             return res.status(HttpStatus.NOT_FOUND).send();
 
         try {
-            this.client.emit('orderCreated', order.id);
+            console.log('buy order', id);
+            // this.client.emit('orderCreated', order.id);
+            await this.service.initiatePayment(id);
             return res.status(HttpStatus.CREATED).send(order);
         } catch (error) {
             this.logger.log('error in create');
@@ -69,6 +73,7 @@ export class OrderController {
     }
 
     @Get(':id')
+    @UseGuards(JwtAuthGuard)
     @ApiImplicitParam({
         name: 'id',
         required: true,
@@ -86,6 +91,7 @@ export class OrderController {
     }
 
     @Get(':id/status')
+    @UseGuards(JwtAuthGuard)
     @ApiImplicitParam({
         name: 'id',
         required: true,
@@ -103,6 +109,7 @@ export class OrderController {
     }
 
     @Post(':id/cancel')
+    @UseGuards(JwtAuthGuard)
     @ApiImplicitParam({
         name: 'id',
         required: true,
@@ -125,6 +132,7 @@ export class OrderController {
 
     @EventPattern('paymentProcessed')
     async paymentProcessed(data: PaymentDetailsDto) {
+        console.log('buy order payment processed', data);
         const order = await this.service.updatePaymentStatus(data);
 
         if (order && order.status == OrderStatus.Confirmed)

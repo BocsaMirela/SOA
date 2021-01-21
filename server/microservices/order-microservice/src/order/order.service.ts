@@ -54,7 +54,7 @@ export class OrderService {
     async updatePaymentStatus(data: PaymentDetailsDto): Promise<IOrder> {
         const order = await this.model.findById(data.orderId);
 
-        if (!order || order.status !== OrderStatus.Created) return;
+        if (!order) return;
 
         switch (data.status) {
             case PaymentStatus.Confirmed:
@@ -67,6 +67,7 @@ export class OrderService {
             default:
                 break;
         }
+        console.log('buy order payment processed emit', order);
         this.webSocket.orderStatusUpdated(order);
         return await order.save();
     }

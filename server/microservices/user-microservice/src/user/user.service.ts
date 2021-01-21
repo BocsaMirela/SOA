@@ -23,7 +23,7 @@ export class UserService {
     }
 
     async findOne(username: string): Promise<IUser | undefined> {
-        return this.model.findOne({username: userId});
+        return this.model.findOne({username});
     }
 
     async create(dto: CreateUser): Promise<IUser> {

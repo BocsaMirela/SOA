@@ -20,9 +20,6 @@ export class PaymentService {
     initiatePayment(order: PayOrderDto): string {
         var payment = new PaymentDetailsDto(order.id);
 
-        if (order.status !== 'created')
-            throw "Wrong Order Status";
-
         if (Math.random() * 10 >= 4)
             payment.status = PaymentStatus.Confirmed;
 
