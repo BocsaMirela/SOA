@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.soa.managers.IOrdersManager
 import com.example.soa.model.Order
-import com.example.soa.model.Product
 import com.example.soa.model.User
 import com.example.soa.network.RetrofitException
 import com.example.soa.network.toRetrofitException
@@ -16,18 +16,22 @@ import com.example.soa.ui.model.base.INetworkViewModel
 import com.example.soa.util.Constants.KEY_USER
 import com.example.soa.util.SingleLiveEvent
 import com.example.soa.util.fromJson
+import com.example.soa.util.replace
 import io.reactivex.rxkotlin.subscribeBy
 
-
 interface IOrdersViewModel : INetworkViewModel<Void> {
+    val pay: LiveData<Boolean>
     val items: LiveData<List<IOrderItemViewModel>>
     fun onBack()
 }
 
 class OrdersViewModel(
     repository: IDataRepository,
+    ordersManager: IOrdersManager,
     private val preference: IPreference
 ) : BaseViewModel(), IOrdersViewModel {
+
+    override val pay: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
 
     override val items: MutableLiveData<List<IOrderItemViewModel>> by lazy { MutableLiveData<List<IOrderItemViewModel>>() }
 
@@ -39,8 +43,11 @@ class OrdersViewModel(
 
     private val user = preference[KEY_USER]!!.fromJson(User::class.java)
 
+    private val data = mutableListOf<Order>()
+
     private val itemClick: (Order) -> Unit = { order ->
         progress.postValue(true)
+        pay.postValue(true)
         repository.buyOrder(order).subscribeBy(onComplete = {
             progress.postValue(false)
         }, onError = {
@@ -54,13 +61,27 @@ class OrdersViewModel(
 
         repository.getOrders().subscribeBy(onSuccess = {
             progress.postValue(false)
+
+            data.clear()
+            data.addAll(it)
+
             items.postValue(it.map { item -> OrderItemViewModel(item, itemClick) })
         }, onError = {
             progress.postValue(false)
             error.postValue(it.toRetrofitException())
         })
 
-        val i =0
+        ordersManager.orderStatus.takeUntil(cleared).subscribeBy(onNext = { order ->
+            val old = data.find { it.id == order.id }
+            old?.let {
+                val index = data.indexOf(old)
+                data.removeAt(index)
+                data.add(index, order)
+
+                items.postValue(data.map { item -> OrderItemViewModel(item, itemClick) })
+            }
+        })
+
     }
 
     override fun onBack() {
@@ -70,13 +91,14 @@ class OrdersViewModel(
 
 class OrdersViewModelFactory(
     private val repository: IDataRepository,
+    private val ordersManager: IOrdersManager,
     private val preference: IPreference
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: java.lang.Class<T>): T {
         if (modelClass.isAssignableFrom(OrdersViewModel::class.java)) {
-            return OrdersViewModel(repository, preference) as T
+            return OrdersViewModel(repository, ordersManager, preference) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

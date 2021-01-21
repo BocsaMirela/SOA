@@ -10,7 +10,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class, NetworkModule::class, ManagersModule::class, RepositoryModule::class])
+@Component(modules = [ApplicationModule::class, NetworkModule::class, ManagersModule::class, RepositoryModule::class, ManagersModule::class])
 interface ApplicationComponent {
     val context: Context
     fun inject(baseFragment: BaseFragment)

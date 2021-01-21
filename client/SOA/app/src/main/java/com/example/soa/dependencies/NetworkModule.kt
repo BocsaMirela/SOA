@@ -10,6 +10,8 @@ import com.example.soa.network.client.DataClient
 import com.example.soa.network.client.OrdersClient
 import com.example.soa.network.client.SessionClient
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
@@ -119,9 +121,11 @@ class NetworkModule {
             .build().create(OrdersClient::class.java)
     }
 
+
     companion object {
         private const val AUTH_ENDPOINT = "http://192.168.42.50:8879/"
         private const val CORE_ENDPOINT = "http://192.168.42.50:8879/"
         private const val ORDERS_ENDPOINT = "http://192.168.42.50:8877/"
+        const val SOCKET_URL = "http://192.168.42.50:8877"
     }
 }

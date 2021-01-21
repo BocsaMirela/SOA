@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/medium_margin">
 
         <TextView
             android:id="@+id/title"
@@ -56,22 +57,27 @@
 
         <TextView
             android:id="@+id/status"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/side_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginBottom="@dimen/medium_margin"
-            android:background="@{viewModel.color}"
+            android:background="@drawable/ic_rounded_background"
+            android:backgroundTint="@{viewModel.color}"
             android:paddingStart="@dimen/large_side_margin"
             android:paddingTop="@dimen/medium_margin"
             android:paddingEnd="@dimen/large_side_margin"
             android:paddingBottom="@dimen/medium_margin"
             android:text="@{viewModel.status}"
+            android:textAlignment="center"
             android:textAllCaps="false"
             android:textSize="17sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/pay"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/date"
             app:layout_constraintTop_toBottomOf="@id/date"
-            tools:background="@color/gray"
+            tools:backgroundTint="@color/gray"
             tools:text="CREATED" />
 
         <Button
@@ -79,12 +85,15 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:layout_marginBottom="@dimen/medium_margin"
             android:backgroundTint="@color/purple"
             android:onClick="@{()->viewModel.onClick()}"
-            android:padding="@dimen/medium_margin"
+            android:paddingTop="@dimen/medium_margin"
+            android:paddingBottom="@dimen/medium_margin"
+            android:paddingStart="@dimen/large_side_margin"
+            android:paddingEnd="@dimen/large_side_margin"
             android:text="@string/pay"
             android:textAllCaps="false"
             android:textSize="17sp"

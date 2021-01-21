@@ -65,6 +65,7 @@ dependencies {
 
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
     implementation 'com.readystatesoftware.chuck:library:1.1.0'
+    implementation  'com.github.nkzawa:socket.io-client:0.6.0'
 
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"

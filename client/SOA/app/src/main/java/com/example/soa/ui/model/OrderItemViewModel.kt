@@ -34,7 +34,11 @@ class OrderItemViewModel(private val order: Order, private val itemClick: (Order
         get() = "Created at: ${SimpleDateFormat(SHORT_FORMAT, Locale.US).format(order.created)}"
 
     override val color: Int
-        get() = if (order.status == Status.CANCELED) R.color.faded_red else R.color.gray
+        get() = when (order.status) {
+            Status.CANCELED -> R.color.faded_red
+            Status.DELIVERED -> R.color.green
+            else -> R.color.gray
+        }
 
     override val visible: Boolean
         get() = order.status == Status.CREATED || order.status == Status.CANCELED
