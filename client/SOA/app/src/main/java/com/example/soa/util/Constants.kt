@@ -13,4 +13,7 @@ object Constants {
 
     const val SHORT_FORMAT = "yyyy-MM-dd hh:mm"
 
+    const val NOTIFICATION_CODE = 100
+    const val KEY_TOKEN = "token"
+
 }

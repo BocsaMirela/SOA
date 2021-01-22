@@ -14,6 +14,7 @@ interface IDataRepository {
     fun getOrders(): Single<List<Order>>
     fun createOrder(product: Product, user: User): Completable
     fun buyOrder(order: Order): Completable
+    fun setFCMToken(token: String): Completable
 }
 
 class DataRepository(private val dataClient: DataClient, private val ordersClient: OrdersClient) : IDataRepository {
@@ -28,5 +29,9 @@ class DataRepository(private val dataClient: DataClient, private val ordersClien
 
     override fun buyOrder(order: Order): Completable {
         return ordersClient.buyOrder(order.id)
+    }
+
+    override fun setFCMToken(token: String): Completable {
+        return dataClient.setFCMToken(token)
     }
 }

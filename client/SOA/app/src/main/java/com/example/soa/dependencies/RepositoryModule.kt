@@ -27,6 +27,6 @@ class RepositoryModule {
     }
 
     companion object {
-        private const val PREFERENCES = "soa.preferences"
+        const val PREFERENCES = "soa.preferences"
     }
 }

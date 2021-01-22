@@ -12,9 +12,12 @@ import com.example.soa.repository.IDataRepository
 import com.example.soa.repository.IPreference
 import com.example.soa.ui.model.base.BaseViewModel
 import com.example.soa.ui.model.base.INetworkViewModel
+import com.example.soa.util.Constants.KEY_TOKEN
 import com.example.soa.util.Constants.KEY_USER
 import com.example.soa.util.SingleLiveEvent
 import com.example.soa.util.fromJson
+import com.example.soa.util.retrieveToken
+import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxkotlin.subscribeBy
 
 
@@ -27,7 +30,7 @@ interface IProductsViewModel : INetworkViewModel<ProductsViewModel.Action> {
 
 class ProductsViewModel(
     repository: IDataRepository,
-    private val preference: IPreference
+    preference: IPreference
 ) : BaseViewModel(), IProductsViewModel {
 
     override val items: MutableLiveData<List<IProgramItemViewModel>> by lazy { MutableLiveData<List<IProgramItemViewModel>>() }
@@ -55,6 +58,14 @@ class ProductsViewModel(
 
     init {
         progress.postValue(true)
+
+        if (preference[KEY_TOKEN, false]) {
+            FirebaseMessaging.getInstance().retrieveToken().flatMapCompletable { token -> repository.setFCMToken(token) }.subscribeBy(onComplete = {
+                preference[KEY_TOKEN] = true
+            }, onError = {
+                error.postValue(it.toRetrofitException())
+            })
+        }
 
         repository.getOrders().subscribeBy(onSuccess = {
             size.postValue(it.size.toString())
