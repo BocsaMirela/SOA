@@ -5,23 +5,24 @@ import {CreateItem} from "./create-item.dto";
 
 @Injectable()
 export class ItemService {
+    private readonly firestore = admin.firestore();
 
     async findAll(): Promise<any> {
-        const itemsRef = admin.firestore().collection("items");
+        const itemsRef = this.firestore.collection("items");
         const snapshot = await itemsRef.get();
         if (snapshot.empty) {
             return [];
         }
-        return snapshot.docs.map(d => this.create(d.id, d.data() as CreateItem))
+        return snapshot.docs.map(d => ItemService.createItem(d.id, d.data() as CreateItem))
     }
 
     async findOne(id: string): Promise<Item> {
-        const itemsRef = admin.firestore().collection("items").doc(id);
+        const itemsRef = this.firestore.collection("items").doc(id);
         const snapshot = await itemsRef.get();
         return snapshot.data() as Item
     }
 
-    private create(id: string, dto: CreateItem): Item {
+    private static createItem(id: string, dto: CreateItem): Item {
         return {
             id: id,
             title: dto.title,
