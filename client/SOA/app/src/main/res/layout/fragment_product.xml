@@ -52,6 +52,19 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/black" />
 
+            <ImageView
+                android:id="@+id/logout"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/side_margin"
+                android:adjustViewBounds="true"
+                android:onClick="@{()->viewModel.onLogout()}"
+                android:src="@drawable/ic_logout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/cart"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
+
             <TextView
                 android:id="@+id/number"
                 android:layout_width="wrap_content"

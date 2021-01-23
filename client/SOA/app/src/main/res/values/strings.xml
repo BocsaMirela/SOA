@@ -12,4 +12,5 @@
     <string name="products">Products</string>
     <string name="orders">Orders</string>
     <string name="pay">Pay</string>
+    <string name="logout">Logout</string>
 </resources>

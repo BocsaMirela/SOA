@@ -16,6 +16,7 @@ import com.example.soa.util.Constants.KEY_TOKEN
 import com.example.soa.util.Constants.KEY_USER
 import com.example.soa.util.SingleLiveEvent
 import com.example.soa.util.fromJson
+import com.example.soa.util.removeCredentials
 import com.example.soa.util.retrieveToken
 import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.rxkotlin.subscribeBy
@@ -25,12 +26,12 @@ interface IProductsViewModel : INetworkViewModel<ProductsViewModel.Action> {
     val items: LiveData<List<IProgramItemViewModel>>
     val size: LiveData<String>
     fun onOrders()
-    fun onLogOut()
+    fun onLogout()
 }
 
 class ProductsViewModel(
     repository: IDataRepository,
-    preference: IPreference
+    private val preference: IPreference
 ) : BaseViewModel(), IProductsViewModel {
 
     override val items: MutableLiveData<List<IProgramItemViewModel>> by lazy { MutableLiveData<List<IProgramItemViewModel>>() }
@@ -67,7 +68,7 @@ class ProductsViewModel(
             })
         }
 
-        repository.getOrders().subscribeBy(onSuccess = {
+        repository.getOrders(user).subscribeBy(onSuccess = {
             size.postValue(it.size.toString())
         }, onError = {
             size.postValue(ZERO.toString())
@@ -86,7 +87,8 @@ class ProductsViewModel(
         update.postValue(Action.ORDERS)
     }
 
-    override fun onLogOut() {
+    override fun onLogout() {
+        preference.removeCredentials()
         update.postValue(null)
     }
 

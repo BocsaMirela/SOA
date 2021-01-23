@@ -11,7 +11,7 @@ import io.reactivex.Single
 
 interface IDataRepository {
     fun getProducts(): Single<List<Product>>
-    fun getOrders(): Single<List<Order>>
+    fun getOrders(user: User): Single<List<Order>>
     fun createOrder(product: Product, user: User): Completable
     fun buyOrder(order: Order): Completable
     fun setFCMToken(token: String): Completable
@@ -21,7 +21,7 @@ class DataRepository(private val dataClient: DataClient, private val ordersClien
 
     override fun getProducts(): Single<List<Product>> = dataClient.getItems()
 
-    override fun getOrders(): Single<List<Order>> = ordersClient.getOrders()
+    override fun getOrders(user: User): Single<List<Order>> = ordersClient.getOrders(user.id)
 
     override fun createOrder(product: Product, user: User): Completable {
         return ordersClient.createOrder(OrderPayload(userId = user.id, product = product, amount = 1))

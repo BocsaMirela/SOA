@@ -11,8 +11,8 @@ import retrofit2.http.Path
 
 interface OrdersClient {
 
-    @GET("api/orders")
-    fun getOrders(): Single<List<Order>>
+    @GET("api/orders/{userId}")
+    fun getOrders(@Path("userId") userId: String): Single<List<Order>>
 
     @POST("api/orders")
     fun createOrder(@Body order: OrderPayload): Completable

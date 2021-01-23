@@ -20,6 +20,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.example.soa.R
+import com.example.soa.repository.IPreference
 import com.example.soa.ui.screen.SplashScreen
 import com.example.soa.util.Constants.NOTIFICATION_CODE
 import com.google.firebase.database.DataSnapshot
@@ -139,4 +140,9 @@ fun Context.showNotification(title: String?, message: String?, priority: Int, da
     // Add as notification
     val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager? ?: return
     manager.notify(NOTIFICATION_CODE, builder.build())
+}
+
+fun IPreference.removeCredentials() {
+    remove(Constants.KEY_USER)
+    remove(Constants.KEY_ACCESS_TOKEN)
 }

@@ -59,7 +59,7 @@ class OrdersViewModel(
     init {
         progress.postValue(true)
 
-        repository.getOrders().subscribeBy(onSuccess = {
+        repository.getOrders(user).subscribeBy(onSuccess = {
             progress.postValue(false)
 
             data.clear()

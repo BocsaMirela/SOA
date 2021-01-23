@@ -124,7 +124,7 @@ class NetworkModule {
 
     companion object {
         private const val AUTH_ENDPOINT = "http://192.168.42.50:8879/"
-        private const val CORE_ENDPOINT = "http://192.168.42.50:8879/"
+        private const val CORE_ENDPOINT = "http://192.168.42.50:8874/"
         private const val ORDERS_ENDPOINT = "http://192.168.42.50:8877/"
         const val SOCKET_URL = "http://192.168.42.50:8877"
     }
