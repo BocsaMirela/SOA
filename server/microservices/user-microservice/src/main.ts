@@ -2,6 +2,7 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {WsAdapter} from '@nestjs/platform-ws';
 import {MicroserviceOptions, Transport} from '@nestjs/microservices';
+import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -13,7 +14,18 @@ async function bootstrap() {
 
     app.enableCors();
     app.useWebSocketAdapter(new WsAdapter(app));
-    await app.listen(8874);
+
+    const options = new DocumentBuilder()
+        .setTitle('User Service')
+        .setDescription('Manages users and authentication')
+        .setVersion('1.0')
+        .addTag('auth')
+        .setBasePath('/api')
+        .build();
+    const document = SwaggerModule.createDocument(app, options);
+    SwaggerModule.setup('doc', app, document);
+
+    await app.listen(8879);
 }
 
 bootstrap();

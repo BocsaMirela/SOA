@@ -1,15 +1,15 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ClientOptions, Transport, ClientProxyFactory } from '@nestjs/microservices';
-import { PaymentDetailsDto } from './dto/payment-details.dto';
-import { PaymentStatus } from './dto/payment-status.enum';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { IOrder } from './interfaces/order.interface';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { OrderStatus } from './enums/order-status.enum';
-import { PayOrderDto } from './dto/pay-order.dto';
-import { payment_host } from '../config';
-import { OrderGateway } from './order.gateway';
+import {Injectable, Logger} from '@nestjs/common';
+import {ClientOptions, Transport, ClientProxyFactory} from '@nestjs/microservices';
+import {PaymentDetailsDto} from './dto/payment-details.dto';
+import {PaymentStatus} from './dto/payment-status.enum';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {IOrder} from './interfaces/order.interface';
+import {CreateOrderDto} from './dto/create-order.dto';
+import {OrderStatus} from './enums/order-status.enum';
+import {PayOrderDto} from './dto/pay-order.dto';
+import {payment_host} from '../config';
+import {OrderGateway} from './order.gateway';
 
 @Injectable()
 export class OrderService {
@@ -30,7 +30,11 @@ export class OrderService {
     }
 
     async findAll(): Promise<IOrder[]> {
-        return await this.model.find().sort({ createdAt: 'descending' }).exec();
+        return await this.model.find().sort({createdAt: 'descending'}).exec();
+    }
+
+    async findAllByUserId(userId: string): Promise<IOrder[]> {
+        return await this.model.find({userId}).sort({createdAt: 'descending'}).exec();
     }
 
     async findById(id: string) {

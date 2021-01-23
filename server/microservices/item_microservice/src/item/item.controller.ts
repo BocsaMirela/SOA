@@ -1,10 +1,12 @@
 import {Controller, Get, NotFoundException, Param, Post, UseGuards,} from '@nestjs/common';
 import {ItemService} from './item.service';
-import {Item} from './item.interface';
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
+import {ApiOkResponse, ApiTags} from "@nestjs/swagger";
+import {Item} from "./item.interface";
 
 @UseGuards(JwtAuthGuard)
 @Controller('api/item')
+@ApiTags('items')
 export class ItemController {
     constructor(
         private readonly itemService: ItemService,
@@ -12,16 +14,11 @@ export class ItemController {
     }
 
     @Get()
+    @ApiOkResponse({
+        description: 'The available products.',
+        type: [Item],
+    })
     async findAll(): Promise<any> {
         return this.itemService.findAll();
-    }
-
-    @Get(':id')
-    async findOne(@Param('id') id: string): Promise<Item> {
-        const item = this.itemService.findOne(id);
-        if (!item) {
-            throw new NotFoundException();
-        }
-        return item;
     }
 }

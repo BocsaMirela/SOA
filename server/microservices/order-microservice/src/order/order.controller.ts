@@ -8,8 +8,9 @@ import {CreateOrderDto} from './dto/create-order.dto';
 import {IOrder} from './interfaces/order.interface';
 import {OrderStatus} from './enums/order-status.enum';
 import {Response} from 'express';
-import {ApiOkResponse, ApiInternalServerErrorResponse, ApiImplicitParam, ApiUseTags} from '@nestjs/swagger';
+import {ApiCreatedResponse, ApiImplicitParam, ApiOkResponse, ApiUseTags} from '@nestjs/swagger';
 import {JwtAuthGuard} from '../auth/jwt-auth.guard';
+import {Order} from "./interfaces/order";
 
 @Controller('orders')
 @ApiUseTags('orders')
@@ -22,21 +23,33 @@ export class OrderController {
     ) {
     }
 
-    @Get()
     @UseGuards(JwtAuthGuard)
-    index(): Observable<IOrder[]> {
-        return from(this.service.findAll());
+    @Get(':userId')
+    @ApiImplicitParam({
+        name: 'userId',
+        required: true,
+        description: 'user ID',
+    })
+    @ApiCreatedResponse({
+        description: 'All the user orders.',
+        type: [Order],
+    })
+    userOrders(@Param('userId') userId: string): Observable<IOrder[]> {
+        return from(this.service.findAllByUserId(userId));
     }
 
     @Post()
     @UseGuards(JwtAuthGuard)
+    @ApiCreatedResponse({
+        description: 'The record has been successfully created.',
+        type: Order,
+    })
     async create(@Res() res: Response, @Body() createOrderDto: CreateOrderDto) {
         if (!createOrderDto || !createOrderDto.amount || createOrderDto.amount <= 0 || !createOrderDto.userId || !createOrderDto.product)
             return res.status(HttpStatus.BAD_REQUEST).send();
 
         try {
             const order = await this.service.create(createOrderDto);
-            // this.client.emit('orderCreated', order.id);
             return res.status(HttpStatus.CREATED).send(order);
         } catch (error) {
             this.logger.log('error in create');
@@ -45,8 +58,8 @@ export class OrderController {
         }
     }
 
-    @Post(':id/buy')
     @UseGuards(JwtAuthGuard)
+    @Post(':id/buy')
     @ApiImplicitParam({
         name: 'id',
         required: true,
@@ -61,8 +74,6 @@ export class OrderController {
             return res.status(HttpStatus.NOT_FOUND).send();
 
         try {
-            console.log('buy order', id);
-            // this.client.emit('orderCreated', order.id);
             await this.service.initiatePayment(id);
             return res.status(HttpStatus.CREATED).send(order);
         } catch (error) {
@@ -72,8 +83,8 @@ export class OrderController {
         }
     }
 
-    @Get(':id')
     @UseGuards(JwtAuthGuard)
+    @Get(':id')
     @ApiImplicitParam({
         name: 'id',
         required: true,

@@ -1,7 +1,7 @@
 import {IsString} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 
-export class CreateToken {
+export class AccessToken {
     @ApiProperty()
-    @IsString() token: string;
+    @IsString() access_token: string;
 }

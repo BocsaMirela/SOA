@@ -20,14 +20,14 @@ services:
   item:
     build: ./item_microservice
     ports:
-      - 8879:8879
+      - 8874:8874
     environment:
       PAYMENT_HOST: payment
       ORDER_HOST: order
   user:
     build: ./user-microservice
     ports:
-      - 8874:8874
+      - 8879:8879
     environment:
       DB_HOST: mongo
       PAYMENT_HOST: payment
