@@ -5,7 +5,8 @@ import admin from "firebase-admin";
 @Injectable()
 export class TasksService {
 
-    @Cron(CronExpression.EVERY_DAY_AT_8PM)
+    // @Cron("0 20 * * 0")
+    @Cron(CronExpression.EVERY_30_SECONDS)
     handleCron() {
         this.sendNotifications()
     }
