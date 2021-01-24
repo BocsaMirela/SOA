@@ -69,11 +69,8 @@ class LoginFragment : BaseFragment() {
             })
         })
 
-        viewModel.error.observe(this, Observer { error ->
-            when (error.kind) {
-                RetrofitException.Kind.SERVER -> requireActivity().toast(R.string.wrong_email_or_password)
-                else -> requireActivity().toast(error.message.toString())
-            }
+        viewModel.error.observe(this, Observer { _ ->
+               requireActivity().toast(R.string.wrong_email_or_password)
         })
     }
 }
